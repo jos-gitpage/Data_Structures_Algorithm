@@ -1,2 +1,4 @@
 # Data_Structures_Algorithm
-About Data Structures And Algorithms Assignments
+                                                    #NAME: NJOKI JOSIAH NDIRANGU
+                                                    #REG NO: SCT 212-0111/2022
+                                                    ##ICS 2105: DATA STRUCTURES AND ALGORITHMS
