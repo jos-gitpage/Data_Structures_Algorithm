@@ -1,0 +1,98 @@
+#include <iostream>
+
+template <typename T>
+class List {
+private:
+    T* elements;
+    int size;
+    int maxSize;
+
+public:
+    // Constructors
+    List() : size(0), maxSize(10) {
+        elements = new T[maxSize];
+    }
+
+    List(int maxSize) : size(0), maxSize(maxSize) {
+        elements = new T[maxSize];
+    }
+
+    // Destructor
+    ~List() {
+        delete[] elements;
+    }
+
+    // Check if the list is empty
+    bool isNull() const {
+        return size == 0;
+    }
+
+    // Check if the list is full
+    bool isFull() const {
+        return size == maxSize;
+    }
+
+    // Get the current size of the list
+    int getSize() const {
+        return size;
+    }
+
+    // Insert an element at the end of the list
+    bool insert(const T& element) {
+        if (!isFull()) {
+            elements[size++] = element;
+            return true;
+        } else {
+            std::cout << "Error: List is full. Cannot insert element.\n";
+            return false;
+        }
+    }
+
+    // Remove an element from the list
+    bool remove(const T& element) {
+        for (int i = 0; i < size; ++i) {
+            if (elements[i] == element) {
+                // Shift elements to fill the gap
+                for (int j = i; j < size - 1; ++j) {
+                    elements[j] = elements[j + 1];
+                }
+                --size;
+                return true;
+            }
+        }
+
+        std::cout << "Error: Element not found. Cannot remove.\n";
+        return false;
+    }
+
+    // Retrieve an element at the specified index
+    T retrieve(int index) const {
+        if (index >= 0 && index < size) {
+            return elements[index];
+        } else {
+            // Handle index out of bounds
+            std::cerr << "Error: Index out of bounds.\n";
+            // Return a default value; in a real application, you might throw an exception.
+            return T();
+        }
+    }
+};
+
+int main() {
+    // Example usage
+    List<int> intList;
+
+    intList.insert(20);
+    intList.insert(30);
+    intList.insert(40);
+
+    std::cout << "List size: " << intList.getSize() << std::endl;
+
+    intList.remove(20);
+
+    std::cout << "List size after removal: " << intList.getSize() << std::endl;
+
+    std::cout << "Element at index 0: " << intList.retrieve(0) << std::endl;
+
+    return 0;
+}
