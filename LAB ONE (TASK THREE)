@@ -1,0 +1,111 @@
+#include <iostream>
+#include <string>
+
+class Course {
+public:
+    std::string course_code;
+    std::string course_name;
+};
+
+class Grade {
+public:
+    int mark;
+    char the_grade;
+
+    // Default constructor
+    Grade() : mark(0), the_grade(' ') {}
+
+    // Constructor to calculate grade based on marks
+    Grade(int mark) : mark(mark) {
+        GetGrade();
+    }
+
+    void GetGrade() {
+        if (mark > 69) {
+            the_grade = 'A';
+        } else if (mark > 59) {
+            the_grade = 'B';
+        } else if (mark > 49) {
+            the_grade = 'C';
+        } else if (mark > 39) {
+            the_grade = 'D';
+        } else {
+            the_grade = 'E';
+        }
+    }
+};
+
+class Student {
+public:
+    std::string Reg_Number;
+    std::string Name;
+    int Age;
+    Course course;
+    Grade grade;
+
+    // Default constructor
+    Student() : Reg_Number(""), Name(""), Age(0), course(), grade() {}
+
+    // Member function to input student details
+    void InputDetails() {
+        std::cout << "Registration Number: ";
+        std::cin >> Reg_Number;
+
+        std::cout << "Name: ";
+        std::cin.ignore();
+        std::getline(std::cin, Name);
+
+        std::cout << "Age: ";
+        std::cin >> Age;
+
+        std::cout << "Enter course details:" << std::endl;
+        std::cout << "Course Code: ";
+        std::cin >> course.course_code;
+
+        std::cout << "Course Name: ";
+        std::cin.ignore();
+        std::getline(std::cin, course.course_name);
+
+        std::cout << "Enter marks: ";
+        std::cin >> grade.mark;
+
+        // Calculate the grade
+        grade.GetGrade();
+    }
+
+    // Member function to display student details
+    void DisplayDetails() {
+        std::cout << "\nDetails for student:" << std::endl;
+        std::cout << "Registration Number: " << Reg_Number << std::endl;
+        std::cout << "Name: " << Name << std::endl;
+        std::cout << "Age: " << Age << std::endl;
+        std::cout << "Course: " << course.course_code << " - " << course.course_name << std::endl;
+        std::cout << "Marks: " << grade.mark << " Grade: " << grade.the_grade << std::endl;
+    }
+};
+
+int main() {
+    int StudentsMax = 40;
+    Student students[StudentsMax];
+
+    int x;
+    std::cout << "Enter the number of students (0 <= x <= " << StudentsMax << "): ";
+    std::cin >> x;
+
+    // Validate the input
+    if (x < 0 || x > StudentsMax) {
+        std::cerr << "Invalid number of students entered." << std::endl;
+        return 1;        // Terminate with an error code.
+    }
+
+    for (int i = 0; i < x; i++) {
+        std::cout << "Enter Student's Details " << i + 1 << ":" << std::endl;
+        students[i].InputDetails();
+    }
+
+    for (int i = 0; i < x; ++i) {
+        students[i].DisplayDetails();
+    }
+
+    return 0;
+}
