@@ -1,0 +1,99 @@
+#include<iostream>
+#include<string>
+
+//Structure For the Course
+struct Course {
+ std::string Course_code;
+ std::string Course_name;
+};
+
+//Structure For The Grade
+struct Grade {
+int mark;
+char the_grade;
+};
+
+//Structure For The Student
+struct Students  {
+std::string Reg_Number;
+std::string Name;
+int Age;
+Course course;
+Grade grade;
+};
+
+// Function toGET grade based on marks
+void GetGrade(Grade& grade) {
+    int mark = grade.mark;
+
+    if (mark > 69) {
+        grade.the_grade = 'A';
+    } else if (mark > 59) {
+        grade.the_grade = 'B';
+    } else if (mark > 49) {
+        grade.the_grade = 'C';
+    } else if (mark > 39) {
+        grade.the_grade = 'D';
+    } else {
+        grade.the_grade = 'E';
+    }
+}
+
+int main() {
+    int StudentsMax = 40;
+    Students students[StudentsMax];
+
+    int x;
+    std::cout << "Enter the number of students (0 <= x <= " << StudentsMax << "): ";
+    std::cin >> x;
+
+    // Validate the input
+    if (x < 0 || x > StudentsMax) {
+        std::cerr << "Invalid number of students entered." << std::endl;
+        return 1;      // This will terminate with an error code.
+    }
+
+
+    for (int i = 0; i < x; i++) {
+        std::cout << "Enter Student's Details " << i + 1 << ":" << std::endl;    //Function To Input Student's Details
+
+
+        std::cout << "Registration Number: ";   // Registration Number
+        std::cin >> students[i].Reg_Number;
+
+        std::cout << "Name: ";
+        std::cin.ignore();         // Clear the newline character from the buffer
+        std::getline(std::cin, students[i].Name);
+
+        // Age
+        std::cout << "Age: ";
+        std::cin >> students[i].Age;
+
+        // Course details
+        std::cout << "Enter course details:" << std::endl;
+        std::cout << "Course Code: ";
+        std::cin >> students[i].course.Course_code;
+
+        std::cout << "Course Name: ";
+        std::cin.ignore();
+        std::getline(std::cin, students[i].course.Course_name);
+
+        // Grade details
+        std::cout << "Enter marks: ";
+        std::cin >> students[i].grade.mark;
+
+        // Calculate the grade
+        GetGrade(students[i].grade);
+    }
+
+    for (int i = 0; i < x; ++i) {
+        std::cout << "\nDetails for student " << i + 1 << ":" << std::endl;
+        std::cout << "Registration Number: " << students[i].Reg_Number << std::endl;         //Part to display the students details
+        std::cout << "Name: " << students[i].Name << std::endl;
+        std::cout << "Age: " << students[i].Age << std::endl;
+        std::cout << "Course: " << students[i].course.Course_code << " - " << students[i].course.Course_name << std::endl;
+        std::cout << "Marks: " << students[i].grade.mark << " Grade: " << students[i].grade.the_grade << std::endl;
+    }
+
+    return 0;
+}
