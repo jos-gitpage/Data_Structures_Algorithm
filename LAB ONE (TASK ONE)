@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+
+// Function to calculate the summation of elements:
+int Summation(std::vector<int>& nums) {
+    int sum = 0;
+    for (int i=0; i<nums.size(); i++) {
+        sum += nums[i];
+    }
+    return sum;
+}
+
+// Function to find the maximum element:
+int Maximum(std::vector<int>& nums) {
+    int max = nums[0];
+    for (int i=0; i<nums.size(); i++) {
+        if (nums[i] > max) {
+            max = nums[i];
+        }
+    }
+    return max;
+}
+
+int main() {
+
+    int n;   // to get the new length of the array
+    std::cout << "Enter the length of the array (n): ";
+    std::cin >> n;
+
+
+    std::vector<int> nums;
+
+    // Allow the user to enter n integers and store them in the vector:
+    for (int i = 0; i < n; ++i) {
+        int get;
+        std::cout << "Enter element " << i + 1  <<":";
+        std::cin >> get;
+        nums.push_back(get);
+    }
+
+
+    int TotalSum = Summation(nums);   //call the Summation Function
+    std::cout << "Sum of the array elements: " << TotalSum << std::endl;  //Display Summation Results
+
+
+    int MaxElement = Maximum(nums);   //call the Maximum Function
+    std::cout << "Maximum element in the array: " << MaxElement << std::endl;
+
+    return 0;
+}
