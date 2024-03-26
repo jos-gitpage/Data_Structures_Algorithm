@@ -1,0 +1,66 @@
+#include <iostream>
+
+using namespace std;
+
+class LinkedListNode {
+public:
+    int val;
+    LinkedListNode* next;
+    LinkedListNode(int x) : val(x), next(nullptr) {}
+};
+
+LinkedListNode* reverseList(LinkedListNode* head) {
+    LinkedListNode* prev = nullptr;
+    LinkedListNode* current = head;
+    LinkedListNode* next = nullptr;
+
+    while (current != nullptr) {
+        next = current->next;  // Store the next node
+        current->next = prev;  // Reverse the current node's pointer
+        prev = current;        // Move prev to the current node
+        current = next;        // Move current to the next node
+    }
+
+    return prev;  // This returns the new head of the reversed list
+}
+
+void printList(LinkedListNode* head) {
+    LinkedListNode* current = head;
+    while (current != nullptr) {
+        cout << current->val << " ";
+        current = current->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    // Create a sample linked list
+    LinkedListNode* head = new LinkedListNode(4);
+    head->next = new LinkedListNode(9);
+    head->next->next = new LinkedListNode(6);
+    head->next->next->next = new LinkedListNode(15);
+    head->next->next->next->next = new LinkedListNode(45);
+    head->next->next->next->next = new LinkedListNode(30);
+    head->next->next->next->next = new LinkedListNode(20);
+
+    // Print the initial list
+    cout << "Initial list: ";
+    printList(head);
+
+    // Reverse the list
+    LinkedListNode* reversedHead = reverseList(head);
+
+    // Print the reversed list
+    cout << "Reversed list: ";
+    printList(reversedHead);
+
+    // Free memory to prevent leaks
+    LinkedListNode* current = reversedHead;
+    while (current != nullptr) {
+        LinkedListNode* temp = current;
+        current = current->next;
+        delete temp;
+    }
+
+    return 0;
+}
