@@ -1,0 +1,67 @@
+#include <iostream>
+
+using namespace std;
+
+class LinkedListNode {
+public:
+    int val;
+    LinkedListNode* next;
+    LinkedListNode(int x) : val(x), next(nullptr) {}
+};
+
+bool hasCycle(LinkedListNode* head) {
+    if (!head || !head->next)
+        return false;
+
+    LinkedListNode* slow = head;
+    LinkedListNode* fast = head->next;
+
+    while (slow != fast) {
+        if (!fast || !fast->next)
+            return false;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    return true;
+}
+
+int main() {
+    // First Sample Example
+    LinkedListNode* head1 = new LinkedListNode(24);
+    head1->next = new LinkedListNode(30);
+    head1->next->next = new LinkedListNode(28);
+    head1->next->next->next = new LinkedListNode(-14);
+    head1->next->next->next->next = head1->next; // Cycle
+
+    cout << boolalpha << "First Sample Example: " << hasCycle(head1) << endl;
+
+    // Freeing memory
+    delete head1->next->next->next->next;
+    delete head1->next->next->next;
+    delete head1->next->next;
+    delete head1->next;
+    delete head1;
+
+    // Second Sample Example
+    LinkedListNode* head2 = new LinkedListNode(51);
+    head2->next = new LinkedListNode(23);
+    head2->next->next = head2;      // Cycle
+
+    cout << boolalpha << "Second Sample Example: " << hasCycle(head2) << endl;
+
+    // Freeing memory
+    delete head2->next->next;
+    delete head2->next;
+    delete head2;
+
+    // Third Sample Example
+    LinkedListNode* head3 = new LinkedListNode(1);    // No cycle
+
+    cout << boolalpha << "Third Sample Example: " << hasCycle(head3) << endl;
+
+    // Freeing memory
+    delete head3;
+
+    return 0;
+}
